@@ -177,8 +177,21 @@ declare global {
   var __kayaDb: Promise<Client> | undefined;
 }
 
+/**
+ * Serverless hosts (Vercel) have a read-only project folder, so without a hosted
+ * database we fall back to the writable /tmp folder. The store works, but data there
+ * is temporary — the admin shows a warning until DATABASE_URL is set.
+ */
+export const usingTemporaryDb = () => !process.env.DATABASE_URL && !!(process.env.VERCEL || process.env.AWS_LAMBDA_FUNCTION_NAME);
+
+function databaseUrl() {
+  if (process.env.DATABASE_URL) return process.env.DATABASE_URL;
+  if (usingTemporaryDb()) return "file:/tmp/kaya.db";
+  return "file:data/kaya.db";
+}
+
 async function open(): Promise<Client> {
-  const url = process.env.DATABASE_URL || "file:data/kaya.db";
+  const url = databaseUrl();
   if (url.startsWith("file:")) {
     const file = url.slice(5);
     fs.mkdirSync(path.dirname(path.resolve(file)), { recursive: true });

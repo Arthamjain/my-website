@@ -7,10 +7,15 @@ import { get } from "./db";
 const ADMIN_COOKIE = "kaya_admin";
 const CUSTOMER_COOKIE = "kaya_customer";
 
+// Used only when SESSION_SECRET is missing in production: sessions stay secure but
+// may sign out when the server restarts.
+const fallbackSecret = crypto.randomBytes(32).toString("hex");
+
 function secret() {
   const s = process.env.SESSION_SECRET;
-  if (!s && process.env.NODE_ENV === "production") throw new Error("SESSION_SECRET must be set in production.");
-  return s || "dev-only-secret-change-me";
+  if (s) return s;
+  if (process.env.NODE_ENV !== "production") return "dev-only-secret-change-me";
+  return process.env.ADMIN_PASSWORD ? crypto.createHash("sha256").update(`kaya-session:${process.env.ADMIN_PASSWORD}`).digest("hex") : fallbackSecret;
 }
 
 const sign = (payload: string) => crypto.createHmac("sha256", secret()).update(payload).digest("base64url");
