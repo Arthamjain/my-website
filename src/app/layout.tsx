@@ -1,30 +1,30 @@
 import type { Metadata, Viewport } from "next";
-import { Cormorant_Garamond, JetBrains_Mono, Plus_Jakarta_Sans } from "next/font/google";
+import { Caveat, Cormorant_Garamond, Plus_Jakarta_Sans } from "next/font/google";
 import "./globals.css";
 
 const cormorant = Cormorant_Garamond({
   variable: "--font-cormorant",
   subsets: ["latin"],
-  weight: ["300", "400", "500", "600"],
+  weight: ["400", "500", "600"],
   style: ["normal", "italic"],
 });
 
 const jakarta = Plus_Jakarta_Sans({
   variable: "--font-jakarta",
   subsets: ["latin"],
+  weight: ["400", "500", "600"],
+});
+
+const caveat = Caveat({
+  variable: "--font-caveat",
+  subsets: ["latin"],
   weight: ["400", "500"],
 });
 
-const jetbrains = JetBrains_Mono({
-  variable: "--font-jetbrains",
-  subsets: ["latin"],
-  weight: ["400"],
-});
-
 export const metadata: Metadata = {
-  title: "KĀYA — Wear Your Inner Weather",
+  title: { default: "KĀYA — Hand-loomed journals with a solid brass spine", template: "%s · KĀYA" },
   description:
-    "Modular brass-spined journals with interchangeable handloomed Indian heritage fabric covers, designed around colour psychology.",
+    "Refillable cotton-rag journals with a solid brass spine and covers hand-loomed by craft clusters across India. Change the cover when your week changes.",
 };
 
 export const viewport: Viewport = {
@@ -33,7 +33,7 @@ export const viewport: Viewport = {
 
 export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
-    <html lang="en" className={`${cormorant.variable} ${jakarta.variable} ${jetbrains.variable} antialiased`}>
+    <html lang="en" className={`${cormorant.variable} ${jakarta.variable} ${caveat.variable} antialiased`}>
       <body>{children}</body>
     </html>
   );

@@ -1,166 +1,218 @@
 @import "tailwindcss";
-@import "lenis/dist/lenis.css";
 
 @theme {
   --color-paper: #faf7f2;
-  --color-linen: #f3ede2;
+  --color-linen: #f2ece2;
+  --color-sand: #e7dfd2;
   --color-ink: #1c1917;
-  --color-muted: #655e57;
-  --color-brass: #b8934a;
-  --color-gold: #c5a059;
+  --color-muted: #6b635b;
+  --color-line: #e4ddd2;
+  --color-brass: #a9823d;
+  --color-indigo: #263859;
+  --color-moss: #2d4236;
+  --color-clay: #b4532a;
+  --color-ok: #3f6b4a;
+  --color-warn: #a86a12;
+  --color-bad: #a3342b;
 
-  /* Luxury motion: no default easing anywhere. */
   --ease-silk: cubic-bezier(0.22, 1, 0.36, 1);
-  --ease-in-out: cubic-bezier(0.22, 1, 0.36, 1);
-  --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
   --default-transition-timing-function: cubic-bezier(0.22, 1, 0.36, 1);
-  --default-transition-duration: 500ms;
+  --default-transition-duration: 300ms;
 }
 
 @theme inline {
   --font-serif: var(--font-cormorant), "Cormorant Garamond", Georgia, serif;
   --font-sans: var(--font-jakarta), "Plus Jakarta Sans", system-ui, sans-serif;
-  --font-mono: var(--font-jetbrains), "JetBrains Mono", ui-monospace, monospace;
-}
-
-@property --aura {
-  syntax: "<color>";
-  inherits: true;
-  initial-value: #263859;
+  --font-hand: var(--font-caveat), "Caveat", cursive;
 }
 
 :root {
-  --hair: rgba(28, 25, 23, 0.08);
-  --aura: #263859;
   color-scheme: light;
 }
 
 html {
   background: var(--color-paper);
-  scrollbar-width: none;
   -webkit-tap-highlight-color: transparent;
-}
-
-html::-webkit-scrollbar {
-  display: none;
+  scroll-behavior: smooth;
 }
 
 body {
   background: var(--color-paper);
   color: var(--color-ink);
   font-family: var(--font-sans);
+  font-size: 15px;
   -webkit-font-smoothing: antialiased;
   text-rendering: optimizeLegibility;
 }
 
 ::selection {
-  background: rgba(184, 147, 74, 0.28);
-  color: var(--color-ink);
+  background: rgba(169, 130, 61, 0.25);
 }
 
-@media (pointer: fine) {
-  html.has-cursor,
-  html.has-cursor * {
-    cursor: none !important;
-  }
-}
-
-@utility glass {
-  background: rgba(250, 247, 242, 0.8);
-  backdrop-filter: blur(16px);
-  -webkit-backdrop-filter: blur(16px);
-  border: 1px solid var(--hair);
-}
-
-/* On phones the book sits behind the copy, so reading surfaces go near-opaque. */
-@media (max-width: 767px) {
-  .glass {
-    background: rgba(250, 247, 242, 0.95);
-  }
+:focus-visible {
+  outline: 2px solid var(--color-brass);
+  outline-offset: 2px;
 }
 
 @layer components {
-  .meta {
-    font-family: var(--font-mono);
-    font-size: 11px;
-    line-height: 1.5;
-    letter-spacing: 0.12em;
+  .eyebrow {
+    font-size: 11.5px;
+    font-weight: 500;
+    letter-spacing: 0.14em;
     text-transform: uppercase;
+    color: var(--color-muted);
   }
 
-  .display {
+  .h-display {
     font-family: var(--font-serif);
     font-weight: 400;
-    font-size: clamp(2.5rem, 5vw, 4.75rem);
-    line-height: 1.02;
-    letter-spacing: -0.025em;
+    font-size: clamp(2.6rem, 6vw, 5.4rem);
+    line-height: 0.98;
+    letter-spacing: -0.02em;
   }
 
-  .display-sm {
+  .h1 {
     font-family: var(--font-serif);
     font-weight: 400;
-    font-size: clamp(2rem, 3.6vw, 3.25rem);
-    line-height: 1.05;
-    letter-spacing: -0.025em;
+    font-size: clamp(2.1rem, 4vw, 3.4rem);
+    line-height: 1.04;
+    letter-spacing: -0.015em;
   }
 
-  .hairline {
-    border-color: var(--hair);
+  .h2 {
+    font-family: var(--font-serif);
+    font-weight: 400;
+    font-size: clamp(1.7rem, 2.8vw, 2.5rem);
+    line-height: 1.08;
+    letter-spacing: -0.01em;
   }
 
-  .field {
+  .h3 {
+    font-family: var(--font-serif);
+    font-weight: 500;
+    font-size: 1.45rem;
+    line-height: 1.15;
+  }
+
+  .prose-kaya p {
+    margin-top: 1em;
+    line-height: 1.75;
+    color: #3d3833;
+  }
+
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    border-radius: 999px;
+    padding: 0.85rem 1.6rem;
+    font-size: 14px;
+    font-weight: 500;
+    transition:
+      background-color 250ms var(--ease-silk),
+      color 250ms var(--ease-silk),
+      transform 250ms var(--ease-silk),
+      border-color 250ms var(--ease-silk);
+  }
+  .btn:active {
+    transform: scale(0.98);
+  }
+  .btn-primary {
+    background: var(--color-ink);
+    color: var(--color-paper);
+  }
+  .btn-primary:hover {
+    background: #34302c;
+  }
+  .btn-primary:disabled {
+    background: #8d8780;
+    cursor: not-allowed;
+  }
+  .btn-ghost {
+    border: 1px solid rgba(28, 25, 23, 0.22);
+    color: var(--color-ink);
+  }
+  .btn-ghost:hover {
+    border-color: var(--color-ink);
+  }
+  .btn-light {
+    background: var(--color-paper);
+    color: var(--color-ink);
+  }
+  .btn-light:hover {
+    background: #fff;
+  }
+
+  .input {
     width: 100%;
-    border: 0;
-    border-bottom: 1px solid rgba(28, 25, 23, 0.18);
-    background: transparent;
-    padding: 0.65rem 0;
-    font-size: 15px;
+    border-radius: 10px;
+    border: 1px solid #d9d1c5;
+    background: #fff;
+    padding: 0.72rem 0.9rem;
+    font-size: 14.5px;
     color: var(--color-ink);
     outline: none;
-    transition: border-color 500ms var(--ease-silk);
+    transition: border-color 200ms, box-shadow 200ms;
+  }
+  .input:focus {
+    border-color: var(--color-ink);
+    box-shadow: 0 0 0 3px rgba(28, 25, 23, 0.07);
+  }
+  .input::placeholder {
+    color: #a39b91;
+  }
+  .label {
+    display: block;
+    margin-bottom: 0.35rem;
+    font-size: 12.5px;
+    font-weight: 500;
+    color: #4b453f;
   }
 
-  .field:focus {
-    border-color: var(--color-brass);
+  .link-underline {
+    background-image: linear-gradient(currentColor, currentColor);
+    background-size: 0% 1px;
+    background-position: 0 100%;
+    background-repeat: no-repeat;
+    transition: background-size 400ms var(--ease-silk);
+  }
+  .link-underline:hover {
+    background-size: 100% 1px;
   }
 
-  .field::placeholder {
-    color: rgba(101, 94, 87, 0.6);
+  .card-photo {
+    background: linear-gradient(180deg, #f1ebe1 0%, #e9e1d4 100%);
   }
 }
 
-/* Mood aura: the custom property interpolates, so the gradient breathes between moods. */
-.aura {
-  transition: --aura 900ms var(--ease-silk);
-  background:
-    radial-gradient(60vw 60vh at 72% 38%, color-mix(in srgb, var(--aura) 16%, transparent), transparent 70%),
-    radial-gradient(40vw 50vh at 12% 90%, color-mix(in srgb, var(--aura) 9%, transparent), transparent 70%);
+.hand {
+  font-family: var(--font-hand);
 }
 
-/* Cotton rag paper grain over everything. */
-.grain {
-  opacity: 0.035;
+.no-scrollbar {
+  scrollbar-width: none;
+}
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+
+/* Paper grain. */
+.grain::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  opacity: 0.05;
   background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='240' height='240'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 0.11 0 0 0 0 0.1 0 0 0 0 0.09 0 0 0 1 0'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>");
 }
 
-@keyframes pin {
-  0% {
-    transform: scale(1);
-    opacity: 0.9;
+@keyframes marquee {
+  from {
+    transform: translateX(0);
   }
-  100% {
-    transform: scale(1.9);
-    opacity: 0;
-  }
-}
-
-@keyframes wave {
-  0%,
-  100% {
-    transform: scaleY(0.3);
-  }
-  50% {
-    transform: scaleY(1);
+  to {
+    transform: translateX(-50%);
   }
 }
 
@@ -170,21 +222,6 @@ body {
   *::after {
     animation-duration: 1ms !important;
     transition-duration: 1ms !important;
-  }
-}
-
-@media print {
-  body * {
-    visibility: hidden !important;
-  }
-  .printable,
-  .printable * {
-    visibility: visible !important;
-  }
-  .printable {
-    position: fixed !important;
-    inset: 0 !important;
-    margin: auto !important;
-    box-shadow: none !important;
+    scroll-behavior: auto !important;
   }
 }
